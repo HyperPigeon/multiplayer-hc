@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "multiplayer-hc",
+  "version": "${version}",
+  "name": "Multiplayer Hc",
+  "description": "A port of a spigot plugin that reset worlds for you when anybody on the server dies.",
+  "authors": [
+    "CyborgPigeon"
+  ],
+  "contact": {
+    "website": "https://github.com/HyperPigeon"
+  },
+  "license": "MIT",
+  "icon": "assets/multiplayer-hc/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "net.hyper_pigeon.multiplayerhc.client.MultiplayerHcClient"
+    ],
+    "main": [
+      "net.hyper_pigeon.multiplayerhc.MultiplayerHc"
+    ]
+  },
+  "mixins": [
+    "multiplayer-hc.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.13.2",
+    "fabric": "*",
+    "minecraft": "1.18.1"
+  }
+}
