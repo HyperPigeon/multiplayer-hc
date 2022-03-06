@@ -14,12 +14,21 @@ public class MultiplayerHcGameEvents {
     public static final WrathOfMekhaneEvent WRATH_OF_MEKHANE_EVENT = new WrathOfMekhaneEvent();
     public static final HarpoonEvent HARPOON_EVENT = new HarpoonEvent();
     public static final SocialDistancingEvent SOCIAL_DISTANCING_EVENT = new SocialDistancingEvent();
+    public static final GiddyUpEvent GIDDY_UP_EVENT = new GiddyUpEvent();
+    public static final ClippedWingsEvent CLIPPED_WINGS_EVENT = new ClippedWingsEvent();
+    public static final BladeWolfEvent BLADE_WOLF_EVENT = new BladeWolfEvent();
 
     public static final ArrayList<MultiplayerHcEvent> eventsList = new ArrayList<>(Arrays.asList(BLIND_IDIOT_GOD_EVENT,NO_ONE_CAN_ESCAPE_MY_SIGHT_EVENT,
-            PHANTOM_MENACE_EVENT,SPEED_DEMONS_EVENT,
-            SWITCH_EVENT,TOTAL_MAYHEM_EVENT,WRATH_OF_MEKHANE_EVENT,
+            PHANTOM_MENACE_EVENT,
+            SPEED_DEMONS_EVENT,
+            SWITCH_EVENT,
+            TOTAL_MAYHEM_EVENT,
+            WRATH_OF_MEKHANE_EVENT,
             HARPOON_EVENT,
-            SOCIAL_DISTANCING_EVENT));
+            SOCIAL_DISTANCING_EVENT,
+            GIDDY_UP_EVENT,
+            CLIPPED_WINGS_EVENT,
+            BLADE_WOLF_EVENT));
 //    public static final ArrayList<MultiplayerHcEvent> eventsList = new ArrayList<>(Arrays.asList(WRATH_OF_MEKHANE_EVENT));
 
 
