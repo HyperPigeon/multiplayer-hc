@@ -341,22 +341,27 @@ public class MultiplayerHcGame {
     private ActionResult onPlayerDeath(ServerPlayerEntity serverPlayerEntity, DamageSource source) {
         spawnPlayerAtCenter(serverPlayerEntity);
 
-        this.gameSpace.getPlayers().stream().forEach(gamePlayer -> {
-            gamePlayer.changeGameMode(GameMode.SPECTATOR);
-            this.timerBar.addPlayer(gamePlayer);
+        if(!serverPlayerEntity.isSpectator()) {
+            this.gameSpace.getPlayers().stream().forEach(gamePlayer -> {
+                gamePlayer.changeGameMode(GameMode.SPECTATOR);
+                this.timerBar.addPlayer(gamePlayer);
 
-        });
-
-        this.gameSpace.getPlayers().
-                sendMessage(Text.of(serverPlayerEntity.getName().asString() + " died and ruined it for everyone!"));
+            });
 
 
-        //this.gameSpace.close(GameCloseReason.FINISHED);
-        this.finishTime = this.world.getTime() + 600;
-        this.gamePhase = GamePhase.GAME_ENDING;
+            this.gameSpace.getPlayers().
+                    sendMessage(Text.of(serverPlayerEntity.getName().asString() + " died and ruined it for everyone!"));
 
 
-        return ActionResult.FAIL;
+            //this.gameSpace.close(GameCloseReason.FINISHED);
+            this.finishTime = this.world.getTime() + 600;
+            this.gamePhase = GamePhase.GAME_ENDING;
+
+            return ActionResult.FAIL;
+        }
+
+
+        return ActionResult.PASS;
     }
 
 
