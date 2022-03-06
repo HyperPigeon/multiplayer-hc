@@ -61,12 +61,12 @@ public class MultiplayerHcGameWaiting {
                 .setTimeOfDay(6000)
                 .setGameRule(GameRules.DO_IMMEDIATE_RESPAWN,true);
 
-        PlayerConfig.Countdown countdown = new PlayerConfig.Countdown(20,10);
+        PlayerConfig.Countdown countdown = new PlayerConfig.Countdown(30,30);
 
         return context.openWithWorld(worldConfig, (activity, world) -> {
             MultiplayerHcGameWaiting waiting = new MultiplayerHcGameWaiting(config, activity.getGameSpace(), world, context);
 
-            GameWaitingLobby.addTo(activity, new PlayerConfig(1, 20, 20, countdown));
+            GameWaitingLobby.addTo(activity, new PlayerConfig(2, 20, 20, countdown));
 
             activity.deny(GameRuleType.PVP);
             activity.listen(GamePlayerEvents.OFFER, waiting::onPlayerOffer);

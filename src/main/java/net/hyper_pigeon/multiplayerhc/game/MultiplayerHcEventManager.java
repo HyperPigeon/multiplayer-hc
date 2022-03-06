@@ -7,8 +7,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Pair;
-import org.lwjgl.system.CallbackI;
-import xyz.nucleoid.plasmid.game.GameSpace;
 
 import java.util.ArrayList;
 
@@ -36,30 +34,16 @@ public class MultiplayerHcEventManager {
     }
 
     public void onEntitySpawn(MultiplayerHcGame game, Entity entity) {
-        ArrayList<Pair<MultiplayerHcEvent,Long>> removeTheseEvents = new ArrayList<>();
         for(Pair<MultiplayerHcEvent, Long> event : events){
-            if(event.getRight() < game.world.getTime()){
-                removeTheseEvents.add(event);
-            }
-            else {
-                event.getLeft().onEntitySpawn(entity);
-            }
+            event.getLeft().onEntitySpawn(entity);
         }
-        events.removeAll(removeTheseEvents);
 
     }
 
     public void onEntityDeath(MultiplayerHcGame game, LivingEntity livingEntity, DamageSource source) {
-        ArrayList<Pair<MultiplayerHcEvent,Long>> removeTheseEvents = new ArrayList<>();
         for(Pair<MultiplayerHcEvent, Long> event : events){
-            if(event.getRight() < game.world.getTime()){
-                removeTheseEvents.add(event);
-            }
-            else {
-                event.getLeft().onEntityDeath(livingEntity, source);
-            }
+            event.getLeft().onEntityDeath(livingEntity, source);
         }
-        events.removeAll(removeTheseEvents);
     }
 
     public void addEvent(MultiplayerHcGame game, MultiplayerHcEvent event, ServerWorld world){
