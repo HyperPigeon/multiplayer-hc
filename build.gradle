@@ -39,6 +39,7 @@ dependencies {
 
     //plasmid
     modImplementation "xyz.nucleoid:plasmid:${project.plasmid_version}"
+    include "xyz.nucleoid:plasmid:${project.plasmid_version}"
 
     //fantasy
     modImplementation "xyz.nucleoid:fantasy:${project.fantasy_version}"
