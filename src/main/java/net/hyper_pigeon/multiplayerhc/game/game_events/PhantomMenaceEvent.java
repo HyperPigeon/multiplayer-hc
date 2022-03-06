@@ -2,11 +2,14 @@ package net.hyper_pigeon.multiplayerhc.game.game_events;
 
 import net.hyper_pigeon.multiplayerhc.game.MultiplayerHcGame;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.PhantomEntity;
 import net.minecraft.entity.mob.SkeletonEntity;
 import net.minecraft.entity.mob.WitchEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
@@ -44,7 +47,9 @@ public class PhantomMenaceEvent implements MultiplayerHcEvent{
             phantomEntity1.refreshPositionAndAngles(blockPos,0,0);
             SkeletonEntity skeletonEntity = EntityType.SKELETON.create(world);
             skeletonEntity.setCanPickUpLoot(true);
+            skeletonEntity.equipStack(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
             skeletonEntity.refreshPositionAndAngles(blockPos,0,0);
+
 
             world.spawnEntity(phantomEntity1);
             world.spawnEntity(skeletonEntity);
@@ -58,6 +63,7 @@ public class PhantomMenaceEvent implements MultiplayerHcEvent{
             phantomEntity2.refreshPositionAndAngles(blockPos,0,0);
             SkeletonEntity skeletonEntity2 = EntityType.SKELETON.create(world);
             skeletonEntity2.setCanPickUpLoot(true);
+            skeletonEntity2.equipStack(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
             skeletonEntity2.refreshPositionAndAngles(blockPos,0,0);
 
 

@@ -52,8 +52,8 @@ public class SwitchEvent implements MultiplayerHcEvent{
                 BlockPos blockPos1 = player1.getBlockPos();
                 BlockPos blockPos2 = player2.getBlockPos();
 
-                player1.refreshPositionAfterTeleport(blockPos2.getX(),blockPos2.getY(),blockPos2.getZ());
-                player2.refreshPositionAfterTeleport(blockPos1.getX(),blockPos1.getY(),blockPos1.getZ());
+                player1.teleport(blockPos2.getX(),blockPos2.getY(),blockPos2.getZ());
+                player2.teleport(blockPos1.getX(),blockPos1.getY(),blockPos1.getZ());
             }
 
             nextUseTime = game.world.getTime() + COOLDOWN;
