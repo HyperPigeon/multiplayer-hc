@@ -8,7 +8,7 @@ import net.minecraft.text.Text;
 public class BlindIdiotGodEvent implements MultiplayerHcEvent{
 
     private boolean isPermanent = false;
-    private final long duration = 600;
+    private final long duration = 400;
 
     @Override
     public Text getName() {
@@ -33,14 +33,12 @@ public class BlindIdiotGodEvent implements MultiplayerHcEvent{
     @Override
     public void startEvent(MultiplayerHcGame game) {
         game.gameSpace.getPlayers().stream().forEach(gamePlayer -> {
-            gamePlayer.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, (int) duration, 1));
-            gamePlayer.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, (int) duration, 3));
+            gamePlayer.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, (int) duration, 0));
+            gamePlayer.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, (int) duration, 1));
             gamePlayer.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, (int) duration, 4));
             gamePlayer.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, (int) duration, 4));
         });
     }
 
-    @Override
-    public void tickEvent(MultiplayerHcGame game) {
-    }
+
 }

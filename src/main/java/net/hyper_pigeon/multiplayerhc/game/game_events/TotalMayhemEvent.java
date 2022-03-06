@@ -35,7 +35,7 @@ public class TotalMayhemEvent implements MultiplayerHcEvent{
     public void onEntityDeath(LivingEntity livingEntity, DamageSource source) {
         BlockPos blockPos = livingEntity.getBlockPos();
         if(blockPos != null){
-            livingEntity.getEntityWorld().createExplosion(livingEntity, blockPos.getX(), blockPos.getY(), blockPos.getZ(), 2.0f, Explosion.DestructionType.NONE);
+            livingEntity.getEntityWorld().createExplosion(livingEntity, blockPos.getX(), blockPos.getY(), blockPos.getZ(), 1.0f, Explosion.DestructionType.NONE);
         }
     }
 }
