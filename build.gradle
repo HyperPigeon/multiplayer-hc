@@ -34,17 +34,23 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
+    //fabric kotlin
+    include "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
+
     //plasmid
     modImplementation "xyz.nucleoid:plasmid:${project.plasmid_version}"
 
     //fantasy
     modImplementation "xyz.nucleoid:fantasy:${project.fantasy_version}"
 
+
     //stimuli
     modImplementation "xyz.nucleoid:stimuli:${project.stimuli_version}"
+    include "xyz.nucleoid:stimuli:${project.stimuli_version}"
 
     //permissions
     modImplementation 'me.lucko:fabric-permissions-api:0.1-SNAPSHOT'
+
 
     //polymer
     modImplementation include("eu.pb4:polymer:${project.polymer_version}")
@@ -52,9 +58,9 @@ dependencies {
     //interdimensional
     modImplementation "net.quiltservertools:interdimensional:${project.interdimensional_version}"
     include "net.quiltservertools:interdimensional:${project.interdimensional_version}"
-    //modImplementation "curse.maven:interdimensional-403656:522143"
-    //modApi "curse.maven:interdimensional-403656:522143"
-    //include "curse.maven:interdimensional-403656:522143"
+
+    include "net.quiltservertools:portals-api:1.1.0"
+
 }
 
 processResources {
