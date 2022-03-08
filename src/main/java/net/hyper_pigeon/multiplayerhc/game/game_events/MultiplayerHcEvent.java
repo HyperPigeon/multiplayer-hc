@@ -19,4 +19,5 @@ public interface MultiplayerHcEvent {
     default void tickEvent(MultiplayerHcGame game){}
     default void onEntitySpawn(Entity entity){}
     default void onEntityDeath(LivingEntity livingEntity, DamageSource source){}
+    default void onDamage(LivingEntity livingEntity, DamageSource source, float v) {}
 }

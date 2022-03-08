@@ -46,6 +46,12 @@ public class MultiplayerHcEventManager {
         }
     }
 
+    public void onDamage(MultiplayerHcGame game, LivingEntity livingEntity, DamageSource source, float v){
+        for(Pair<MultiplayerHcEvent, Long> event : events){
+            event.getLeft().onDamage(livingEntity, source, v);
+        }
+    }
+
     public void addEvent(MultiplayerHcGame game, MultiplayerHcEvent event, ServerWorld world){
         long time = world.getTime()+event.getDuration();
         if(!containsEvent(event)){

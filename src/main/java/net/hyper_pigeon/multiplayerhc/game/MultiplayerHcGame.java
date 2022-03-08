@@ -42,6 +42,7 @@ import xyz.nucleoid.plasmid.game.common.widget.BossBarWidget;
 import xyz.nucleoid.plasmid.game.event.GameActivityEvents;
 import xyz.nucleoid.plasmid.game.event.GamePlayerEvents;
 import xyz.nucleoid.plasmid.game.rule.GameRuleType;
+import xyz.nucleoid.stimuli.event.entity.EntityDamageEvent;
 import xyz.nucleoid.stimuli.event.entity.EntityDeathEvent;
 import xyz.nucleoid.stimuli.event.entity.EntitySpawnEvent;
 import xyz.nucleoid.stimuli.event.player.PlayerDeathEvent;
@@ -193,12 +194,18 @@ public class MultiplayerHcGame {
             game.listen(EntitySpawnEvent.EVENT, active::onEntitySpawn);
             game.listen(GameActivityEvents.ENABLE, active::onEnable);
             game.listen(GameActivityEvents.DISABLE, active::onDisable);
+            game.listen(EntityDamageEvent.EVENT, active::onDamage);
 
 
 //            game.listen(NetherPortalOpenEvent.EVENT, active::onNetherPortalOpen);
            //game.listen(EndPortalOpenEvent.EVENT, active::onEndPortalOpen);
 
         });
+    }
+
+    private ActionResult onDamage(LivingEntity livingEntity, DamageSource source, float v) {
+        multiplayerHcEventManager.onDamage(this,livingEntity,source,v);
+        return ActionResult.PASS;
     }
 
     private ActionResult onEntitySpawn(Entity entity) {

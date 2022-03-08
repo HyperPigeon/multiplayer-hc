@@ -17,6 +17,7 @@ public class MultiplayerHcGameEvents {
     public static final GiddyUpEvent GIDDY_UP_EVENT = new GiddyUpEvent();
     public static final ClippedWingsEvent CLIPPED_WINGS_EVENT = new ClippedWingsEvent();
     public static final BladeWolfEvent BLADE_WOLF_EVENT = new BladeWolfEvent();
+    public static final ComboStarterEvent COMBO_STARTER_EVENT = new ComboStarterEvent();
 
     public static final ArrayList<MultiplayerHcEvent> eventsList = new ArrayList<>(Arrays.asList(BLIND_IDIOT_GOD_EVENT,NO_ONE_CAN_ESCAPE_MY_SIGHT_EVENT,
             PHANTOM_MENACE_EVENT,
@@ -28,7 +29,8 @@ public class MultiplayerHcGameEvents {
             SOCIAL_DISTANCING_EVENT,
             GIDDY_UP_EVENT,
             CLIPPED_WINGS_EVENT,
-            BLADE_WOLF_EVENT));
+            BLADE_WOLF_EVENT,
+            COMBO_STARTER_EVENT));
 //    public static final ArrayList<MultiplayerHcEvent> eventsList = new ArrayList<>(Arrays.asList(WRATH_OF_MEKHANE_EVENT));
 
 
