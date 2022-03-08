@@ -5,10 +5,10 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.text.Text;
 
-public class SocialDistancingEvent implements MultiplayerHcEvent{
+public class MoonGravityEvent implements MultiplayerHcEvent{
     @Override
     public Text getName() {
-        return Text.of("Social Distancing");
+        return Text.of("Moon Gravity");
     }
 
     @Override
@@ -23,14 +23,14 @@ public class SocialDistancingEvent implements MultiplayerHcEvent{
 
     @Override
     public long getDuration() {
-        return 2500;
+        return 0;
     }
 
-    public void tickEvent(MultiplayerHcGame game) {
+    @Override
+    public void startEvent(MultiplayerHcGame game) {
         game.gameSpace.getPlayers().stream().forEach(gamePlayer -> {
-            if (gamePlayer.getEntityWorld().isPlayerInRange(gamePlayer.getX(), gamePlayer.getY(), gamePlayer.getZ(),6)){
-                gamePlayer.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON,200));
-            }
+            gamePlayer.addStatusEffect(new StatusEffectInstance(StatusEffects.JUMP_BOOST,6000,1));
+            gamePlayer.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING,6000));
         });
     }
 }

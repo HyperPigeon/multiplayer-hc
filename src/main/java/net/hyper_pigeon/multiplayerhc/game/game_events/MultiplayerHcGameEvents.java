@@ -19,8 +19,17 @@ public class MultiplayerHcGameEvents {
     public static final BladeWolfEvent BLADE_WOLF_EVENT = new BladeWolfEvent();
     public static final ComboStarterEvent COMBO_STARTER_EVENT = new ComboStarterEvent();
     public static final LifestealEvent LIFESTEAL_EVENT = new LifestealEvent();
+    public static final MoonGravityEvent MOON_GRAVITY_EVENT = new MoonGravityEvent();
+    public static final TaxationWithoutRepresentationEvent TAXATION_WITHOUT_REPRESENTATION_EVENT = new TaxationWithoutRepresentationEvent();
+    public static final PoisonedArrowsEvent POISONED_ARROWS_EVENT = new PoisonedArrowsEvent();
+    public static final HealingArrowsEvent HEALING_ARROWS_EVENT = new HealingArrowsEvent();
+    public static final DamageArrowsEvent DAMAGE_ARROWS_EVENT = new DamageArrowsEvent();
+    public static final UnbrokenEvent UNBROKEN_EVENT = new UnbrokenEvent();
+    public static final DragonBroEvent DRAGON_BRO_EVENT = new DragonBroEvent();
 
-    public static final ArrayList<MultiplayerHcEvent> eventsList = new ArrayList<>(Arrays.asList(BLIND_IDIOT_GOD_EVENT,NO_ONE_CAN_ESCAPE_MY_SIGHT_EVENT,
+    public static final ArrayList<MultiplayerHcEvent> eventsList = new ArrayList<>(Arrays.asList(
+            BLIND_IDIOT_GOD_EVENT,
+            NO_ONE_CAN_ESCAPE_MY_SIGHT_EVENT,
             PHANTOM_MENACE_EVENT,
             SPEED_DEMONS_EVENT,
             SWITCH_EVENT,
@@ -32,7 +41,14 @@ public class MultiplayerHcGameEvents {
             CLIPPED_WINGS_EVENT,
             BLADE_WOLF_EVENT,
             COMBO_STARTER_EVENT,
-            LIFESTEAL_EVENT));
+            LIFESTEAL_EVENT,
+            MOON_GRAVITY_EVENT,
+            TAXATION_WITHOUT_REPRESENTATION_EVENT,
+            POISONED_ARROWS_EVENT,
+            DAMAGE_ARROWS_EVENT,
+            HEALING_ARROWS_EVENT,
+            UNBROKEN_EVENT,
+            DRAGON_BRO_EVENT));
 //    public static final ArrayList<MultiplayerHcEvent> eventsList = new ArrayList<>(Arrays.asList(WRATH_OF_MEKHANE_EVENT));
 
 
