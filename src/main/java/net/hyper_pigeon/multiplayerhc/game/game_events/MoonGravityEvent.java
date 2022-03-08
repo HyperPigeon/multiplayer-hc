@@ -23,7 +23,7 @@ public class MoonGravityEvent implements MultiplayerHcEvent{
 
     @Override
     public long getDuration() {
-        return 0;
+        return 6000;
     }
 
     @Override

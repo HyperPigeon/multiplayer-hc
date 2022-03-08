@@ -15,7 +15,7 @@ import java.util.List;
 public class DragonBroEvent implements MultiplayerHcEvent{
     @Override
     public Text getName() {
-        return null;
+        return Text.of("Dragon Bro");
     }
 
     @Override

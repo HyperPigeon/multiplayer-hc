@@ -24,7 +24,7 @@ public class DamageArrowsEvent implements MultiplayerHcEvent{
 
     @Override
     public long getDuration() {
-        return 0;
+        return 2400;
     }
 
     @Override

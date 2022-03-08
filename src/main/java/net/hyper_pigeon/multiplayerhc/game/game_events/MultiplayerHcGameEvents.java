@@ -49,7 +49,9 @@ public class MultiplayerHcGameEvents {
             HEALING_ARROWS_EVENT,
             UNBROKEN_EVENT,
             DRAGON_BRO_EVENT));
-//    public static final ArrayList<MultiplayerHcEvent> eventsList = new ArrayList<>(Arrays.asList(WRATH_OF_MEKHANE_EVENT));
+
+
+    //public static final ArrayList<MultiplayerHcEvent> eventsList = new ArrayList<>(Arrays.asList(POISONED_ARROWS_EVENT));
 
 
 }

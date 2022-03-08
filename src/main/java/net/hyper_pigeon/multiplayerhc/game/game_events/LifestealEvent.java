@@ -7,7 +7,7 @@ import net.minecraft.text.Text;
 public class LifestealEvent implements MultiplayerHcEvent{
     @Override
     public Text getName() {
-        return null;
+        return Text.of("Lifesteal");
     }
 
     @Override

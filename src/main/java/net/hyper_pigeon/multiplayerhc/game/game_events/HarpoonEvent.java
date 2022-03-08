@@ -33,7 +33,6 @@ public class HarpoonEvent implements MultiplayerHcEvent{
             tridentItem.setDamage(249);
             tridentItem.addEnchantment(Enchantments.CHANNELING,3);
             tridentItem.addEnchantment(Enchantments.IMPALING, 3);
-            tridentItem.addEnchantment(Enchantments.BINDING_CURSE,1);
             gamePlayer.giveItemStack(tridentItem);
             gamePlayer.giveItemStack(tridentItem);
             gamePlayer.giveItemStack(tridentItem);
