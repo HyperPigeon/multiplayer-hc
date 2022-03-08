@@ -9,7 +9,7 @@ import net.minecraft.world.explosion.Explosion;
 public class TotalMayhemEvent implements MultiplayerHcEvent{
 
     private boolean isPermanent = false;
-    private final long duration = 1800;
+    private final long duration = 2400;
 
     @Override
     public Text getName() {

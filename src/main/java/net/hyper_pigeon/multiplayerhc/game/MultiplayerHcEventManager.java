@@ -25,6 +25,9 @@ public class MultiplayerHcEventManager {
         for(Pair<MultiplayerHcEvent, Long> event : events){
             if(event.getRight() < game.world.getTime()){
                 removeTheseEvents.add(event);
+                if(event.getLeft().getDuration() > 0) {
+                    game.gameSpace.getPlayers().sendMessage(Text.of(event.getLeft().getName().asString() + " has ended!"));
+                }
             }
             else {
                 event.getLeft().tickEvent(game);
