@@ -49,6 +49,8 @@ public class BladeWolfEvent implements MultiplayerHcEvent{
 
             foxEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED,6000,2));
             foxEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE,6000,2));
+
+            gamePlayer.giveItemStack(new ItemStack(Items.SWEET_BERRIES,32));
         });
     }
 }
