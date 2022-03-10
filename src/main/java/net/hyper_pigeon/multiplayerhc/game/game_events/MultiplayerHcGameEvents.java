@@ -26,6 +26,8 @@ public class MultiplayerHcGameEvents {
     public static final DamageArrowsEvent DAMAGE_ARROWS_EVENT = new DamageArrowsEvent();
     public static final UnbrokenEvent UNBROKEN_EVENT = new UnbrokenEvent();
     public static final DragonBroEvent DRAGON_BRO_EVENT = new DragonBroEvent();
+    public static final StrongerTogetherEvent STRONGER_TOGETHER_EVENT = new StrongerTogetherEvent();
+    public static final PinballPeopleEvent PINBALL_PEOPLE_EVENT = new PinballPeopleEvent();
 
     public static final ArrayList<MultiplayerHcEvent> eventsList = new ArrayList<>(Arrays.asList(
             BLIND_IDIOT_GOD_EVENT,
@@ -48,7 +50,9 @@ public class MultiplayerHcGameEvents {
             DAMAGE_ARROWS_EVENT,
             HEALING_ARROWS_EVENT,
             UNBROKEN_EVENT,
-            DRAGON_BRO_EVENT));
+            DRAGON_BRO_EVENT,
+            STRONGER_TOGETHER_EVENT,
+            PINBALL_PEOPLE_EVENT));
 
 
     //public static final ArrayList<MultiplayerHcEvent> eventsList = new ArrayList<>(Arrays.asList(POISONED_ARROWS_EVENT));

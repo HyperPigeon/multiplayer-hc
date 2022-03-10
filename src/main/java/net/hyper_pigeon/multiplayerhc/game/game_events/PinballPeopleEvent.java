@@ -1,14 +1,15 @@
 package net.hyper_pigeon.multiplayerhc.game.game_events;
 
 import net.hyper_pigeon.multiplayerhc.game.MultiplayerHcGame;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 
-public class SocialDistancingEvent implements MultiplayerHcEvent{
+import java.util.List;
+
+public class PinballPeopleEvent implements MultiplayerHcEvent{
     @Override
     public Text getName() {
-        return Text.of("Social Distancing");
+        return Text.of("Pinball People");
     }
 
     @Override
@@ -23,13 +24,15 @@ public class SocialDistancingEvent implements MultiplayerHcEvent{
 
     @Override
     public long getDuration() {
-        return 2750;
+        return 3000;
     }
 
+    @Override
     public void tickEvent(MultiplayerHcGame game) {
         game.gameSpace.getPlayers().stream().forEach(gamePlayer -> {
-            if (gamePlayer.getEntityWorld().isPlayerInRange(gamePlayer.getX(), gamePlayer.getY(), gamePlayer.getZ(),6)){
-                gamePlayer.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON,200));
+            List<ServerPlayerEntity> players = gamePlayer.getEntityWorld().getEntitiesByClass(ServerPlayerEntity.class,gamePlayer.getBoundingBox(), playerEntity -> {return true;});
+            if(players.size() >= 1){
+                gamePlayer.setVelocity(players.get(0).getVelocity().multiply(7));
             }
         });
     }
