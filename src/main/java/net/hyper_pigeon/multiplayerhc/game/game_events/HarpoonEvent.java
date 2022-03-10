@@ -30,14 +30,18 @@ public class HarpoonEvent implements MultiplayerHcEvent{
     public void startEvent(MultiplayerHcGame game){
         game.gameSpace.getPlayers().stream().forEach(gamePlayer -> {
             ItemStack tridentItem = new ItemStack(Items.TRIDENT);
+            ItemStack tridentItem2 = new ItemStack(Items.TRIDENT);
+            ItemStack tridentItem3 = new ItemStack(Items.TRIDENT);
+            ItemStack tridentItem4 = new ItemStack(Items.TRIDENT);
+            ItemStack tridentItem5 = new ItemStack(Items.TRIDENT);
             tridentItem.setDamage(249);
             tridentItem.addEnchantment(Enchantments.CHANNELING,3);
             tridentItem.addEnchantment(Enchantments.IMPALING, 3);
             gamePlayer.giveItemStack(tridentItem);
-            gamePlayer.giveItemStack(tridentItem);
-            gamePlayer.giveItemStack(tridentItem);
-            gamePlayer.giveItemStack(tridentItem);
-            gamePlayer.giveItemStack(tridentItem);
+            gamePlayer.giveItemStack(tridentItem2);
+            gamePlayer.giveItemStack(tridentItem3);
+            gamePlayer.giveItemStack(tridentItem4);
+            gamePlayer.giveItemStack(tridentItem5);
         });
     }
 
