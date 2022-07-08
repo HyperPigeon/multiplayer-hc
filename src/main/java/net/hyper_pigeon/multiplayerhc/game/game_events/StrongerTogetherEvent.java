@@ -33,15 +33,15 @@ public class StrongerTogetherEvent implements MultiplayerHcEvent{
     public void tickEvent(MultiplayerHcGame game) {
         game.gameSpace.getPlayers().stream().forEach(gamePlayer -> {
            List<ServerPlayerEntity> players = gamePlayer.getEntityWorld().getEntitiesByClass(ServerPlayerEntity.class,gamePlayer.getBoundingBox().expand(6), playerEntity -> {return true;});
-            if(players.size() == 1){
+            if(players.size() == 2){
                 gamePlayer.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH,200));
                 gamePlayer.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION,200));
             }
-            else if(players.size() == 2){
+            else if(players.size() == 3){
                 gamePlayer.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH,200,1));
                 gamePlayer.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION,200,1));
             }
-            else if(players.size() >= 3){
+            else if(players.size() >= 4){
                 gamePlayer.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH,200,2));
                 gamePlayer.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION,200,2));
             }

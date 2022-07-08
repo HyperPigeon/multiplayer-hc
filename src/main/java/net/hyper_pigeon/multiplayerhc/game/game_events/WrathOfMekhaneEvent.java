@@ -6,6 +6,8 @@ import net.hyper_pigeon.multiplayerhc.registry.MultiplayerHcEntities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -105,4 +107,5 @@ public class WrathOfMekhaneEvent implements MultiplayerHcEvent{
             angryIronGolemEntity3.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION,6000,0));
         }
     }
+
 }

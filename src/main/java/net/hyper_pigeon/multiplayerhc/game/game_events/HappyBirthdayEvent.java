@@ -1,15 +1,14 @@
 package net.hyper_pigeon.multiplayerhc.game.game_events;
 
 import net.hyper_pigeon.multiplayerhc.game.MultiplayerHcGame;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 
-public class ClippedWingsEvent implements MultiplayerHcEvent{
+public class HappyBirthdayEvent implements MultiplayerHcEvent{
     @Override
     public Text getName() {
-        return Text.of("Clipped Wings");
+        return Text.of("Happy Birthday!");
     }
 
     @Override
@@ -29,12 +28,9 @@ public class ClippedWingsEvent implements MultiplayerHcEvent{
 
     @Override
     public void startEvent(MultiplayerHcGame game) {
-        game.gameSpace.getPlayers().stream().forEach(gamePlayer -> {
-            ItemStack elytra = new ItemStack(Items.ELYTRA);
-            elytra.setDamage(385);
-            ItemStack fireworks = new ItemStack(Items.FIREWORK_ROCKET,3);
-            gamePlayer.giveItemStack(elytra);
-            gamePlayer.giveItemStack(fireworks);
+        ItemStack cakeStack = new ItemStack(Items.CAKE);
+        game.gameSpace.getPlayers().stream().forEach(serverPlayerEntity -> {
+            serverPlayerEntity.giveItemStack(cakeStack);
         });
     }
 }

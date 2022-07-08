@@ -44,14 +44,14 @@ public class BladeWolfEvent implements MultiplayerHcEvent{
             gamePlayer.getWorld().spawnEntity(foxEntity);
 
             ItemStack sword = new ItemStack(Items.DIAMOND_SWORD);
-            sword.addEnchantment(Enchantments.SHARPNESS,5);
+            sword.addEnchantment(Enchantments.SHARPNESS,1);
             foxEntity.equipStack(EquipmentSlot.MAINHAND,sword);
 
             foxEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED,6000,2));
             foxEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH,6000,2));
             foxEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE,6000,3));
 
-            gamePlayer.giveItemStack(new ItemStack(Items.SWEET_BERRIES,32));
+            gamePlayer.giveItemStack(new ItemStack(Items.SWEET_BERRIES,8));
         });
     }
 }

@@ -65,7 +65,7 @@ public class MultiplayerHcGame {
 
     public final MultiplayerHcEventManager multiplayerHcEventManager;
     private final double eventProbablity = 0.001;
-    private static final long EVENT_COOLDOWN = 1200;
+    private static final long EVENT_COOLDOWN = 600;
     private long nextEventAddTime = 0;
 
     public static final ArrayList<MultiplayerHcGame> runningGames = new ArrayList<>();

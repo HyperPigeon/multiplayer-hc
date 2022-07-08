@@ -28,7 +28,8 @@ public class SocialDistancingEvent implements MultiplayerHcEvent{
 
     public void tickEvent(MultiplayerHcGame game) {
         game.gameSpace.getPlayers().stream().forEach(gamePlayer -> {
-            if (gamePlayer.getEntityWorld().isPlayerInRange(gamePlayer.getX(), gamePlayer.getY(), gamePlayer.getZ(),6)){
+            if (gamePlayer.getEntityWorld().getClosestPlayer(gamePlayer,6) != null &&
+                    gamePlayer.getEntityWorld().getClosestPlayer(gamePlayer,6) != gamePlayer){
                 gamePlayer.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON,200));
             }
         });

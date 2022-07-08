@@ -1,8 +1,6 @@
 package net.hyper_pigeon.multiplayerhc.game.game_events;
 
 import net.hyper_pigeon.multiplayerhc.game.MultiplayerHcGame;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -12,10 +10,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class DragonBroEvent implements MultiplayerHcEvent{
+public class DontDoItEvent implements MultiplayerHcEvent{
     @Override
     public Text getName() {
-        return Text.of("Dragon Bro");
+        return Text.of("Don't do it.");
     }
 
     @Override
@@ -35,10 +33,11 @@ public class DragonBroEvent implements MultiplayerHcEvent{
 
     @Override
     public void startEvent(MultiplayerHcGame game) {
-        List<ServerPlayerEntity> dragonBro = pickNRandom(game.gameSpace.getPlayers().stream().toList(),1);
-        ItemStack dragonHead = new ItemStack(Items.DRAGON_HEAD);
-        dragonHead.addEnchantment(Enchantments.BINDING_CURSE,1);
-        dragonBro.get(0).equipStack(EquipmentSlot.HEAD, dragonHead);
+        ServerPlayerEntity randomPlayer = pickNRandom(game.gameSpace.getPlayers().stream().toList(), 1).get(0);
+        ItemStack witherSkeleSkullsStack = new ItemStack(Items.WITHER_SKELETON_SKULL,3);
+        ItemStack soulSandStack = new ItemStack(Items.SOUL_SAND, 4);
+        randomPlayer.giveItemStack(witherSkeleSkullsStack);
+        randomPlayer.giveItemStack(soulSandStack);
     }
 
     public static List<ServerPlayerEntity> pickNRandom(List<ServerPlayerEntity> lst, int n) {

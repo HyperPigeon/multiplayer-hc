@@ -28,6 +28,17 @@ public class MultiplayerHcGameEvents {
     public static final DragonBroEvent DRAGON_BRO_EVENT = new DragonBroEvent();
     public static final StrongerTogetherEvent STRONGER_TOGETHER_EVENT = new StrongerTogetherEvent();
     public static final PinballPeopleEvent PINBALL_PEOPLE_EVENT = new PinballPeopleEvent();
+    public static final NanomachinesEvent NANOMACHINES_EVENT = new NanomachinesEvent();
+    public static final HarbingersEvent HARBINGERS_EVENT = new HarbingersEvent();
+    public static final ZeroNineSixContainmentBreachEvent ZERO_NINE_SIX_CONTAINMENT_BREACH_EVENT = new ZeroNineSixContainmentBreachEvent();
+    public static final OneSevenThreeContainmentBreachEvent ONE_SEVEN_THREE_CONTAINMENT_BREACH_EVENT = new OneSevenThreeContainmentBreachEvent();
+    public static final FreeHealthcareEvent FREE_HEALTHCARE_EVENT = new FreeHealthcareEvent();
+    public static final FreePuppiesEvent FREE_PUPPIES_EVENT = new FreePuppiesEvent();
+    public static final OrbitalStrikeEvent ORBITAL_STRIKE_EVENT = new OrbitalStrikeEvent();
+    public static final FourthOfJulyEvent FOURTH_OF_JULY_EVENT = new FourthOfJulyEvent();
+    public static final HappyBirthdayEvent HAPPY_BIRTHDAY_EVENT = new HappyBirthdayEvent();
+    public static final DontDoItEvent DONT_DO_IT_EVENT = new DontDoItEvent();
+    public static final DirtInYourEyeEvent DIRT_IN_YOUR_EYE_EVENT = new DirtInYourEyeEvent();
 
     public static final ArrayList<MultiplayerHcEvent> eventsList = new ArrayList<>(Arrays.asList(
             BLIND_IDIOT_GOD_EVENT,
@@ -52,7 +63,18 @@ public class MultiplayerHcGameEvents {
             UNBROKEN_EVENT,
             DRAGON_BRO_EVENT,
             STRONGER_TOGETHER_EVENT,
-            PINBALL_PEOPLE_EVENT));
+            PINBALL_PEOPLE_EVENT,
+            NANOMACHINES_EVENT,
+            HARBINGERS_EVENT,
+            ZERO_NINE_SIX_CONTAINMENT_BREACH_EVENT,
+            ONE_SEVEN_THREE_CONTAINMENT_BREACH_EVENT,
+            FREE_HEALTHCARE_EVENT,
+            FREE_PUPPIES_EVENT,
+            ORBITAL_STRIKE_EVENT,
+            FOURTH_OF_JULY_EVENT,
+            HAPPY_BIRTHDAY_EVENT,
+            DONT_DO_IT_EVENT,
+            DIRT_IN_YOUR_EYE_EVENT));
 
 
     //public static final ArrayList<MultiplayerHcEvent> eventsList = new ArrayList<>(Arrays.asList(POISONED_ARROWS_EVENT));

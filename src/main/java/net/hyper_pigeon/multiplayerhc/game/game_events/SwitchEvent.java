@@ -1,6 +1,7 @@
 package net.hyper_pigeon.multiplayerhc.game.game_events;
 
 import net.hyper_pigeon.multiplayerhc.game.MultiplayerHcGame;
+import net.minecraft.server.ServerTask;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
@@ -17,7 +18,7 @@ public class SwitchEvent implements MultiplayerHcEvent{
 
     @Override
     public Text getName() {
-        return Text.of("There's this game my father taught me years ago, it's called Switch");
+        return Text.of("Let's switch things up.");
     }
 
     @Override
@@ -52,8 +53,21 @@ public class SwitchEvent implements MultiplayerHcEvent{
                 BlockPos blockPos1 = player1.getBlockPos();
                 BlockPos blockPos2 = player2.getBlockPos();
 
-                player1.teleport(blockPos2.getX(),blockPos2.getY(),blockPos2.getZ());
-                player2.teleport(blockPos1.getX(),blockPos1.getY(),blockPos1.getZ());
+
+                if(player1.hasVehicle()){
+                    player1.requestTeleportAndDismount(blockPos2.getX(), blockPos2.getY(), blockPos2.getZ());
+                }
+                else {
+                    player1.requestTeleport(blockPos2.getX(), blockPos2.getY(), blockPos2.getZ());
+                }
+
+                if(player2.hasVehicle()){
+                    player2.requestTeleportAndDismount(blockPos1.getX(),blockPos1.getY(),blockPos1.getZ());
+                }
+                else {
+                    player2.requestTeleport(blockPos1.getX(),blockPos1.getY(),blockPos1.getZ());
+                }
+
             }
 
             nextUseTime = game.world.getTime() + COOLDOWN;
