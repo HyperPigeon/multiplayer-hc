@@ -64,7 +64,6 @@ public class MultiplayerHcGameEvents {
             UNBROKEN_EVENT,
             DRAGON_BRO_EVENT,
             STRONGER_TOGETHER_EVENT,
-            PINBALL_PEOPLE_EVENT,
             NANOMACHINES_EVENT,
             HARBINGERS_EVENT,
             ZERO_NINE_SIX_CONTAINMENT_BREACH_EVENT,

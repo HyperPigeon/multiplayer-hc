@@ -3,6 +3,7 @@ package net.hyper_pigeon.multiplayerhc.game;
 import net.hyper_pigeon.multiplayerhc.config.MultiplayerHcGameConfig;
 import net.hyper_pigeon.multiplayerhc.game.game_events.MultiplayerHcEvent;
 import net.hyper_pigeon.multiplayerhc.game.game_events.MultiplayerHcGameEvents;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -41,6 +42,8 @@ import xyz.nucleoid.plasmid.game.GameSpace;
 import xyz.nucleoid.plasmid.game.common.widget.BossBarWidget;
 import xyz.nucleoid.plasmid.game.event.GameActivityEvents;
 import xyz.nucleoid.plasmid.game.event.GamePlayerEvents;
+import xyz.nucleoid.plasmid.game.player.PlayerOffer;
+import xyz.nucleoid.plasmid.game.player.PlayerOfferResult;
 import xyz.nucleoid.plasmid.game.rule.GameRuleType;
 import xyz.nucleoid.stimuli.event.entity.EntityDamageEvent;
 import xyz.nucleoid.stimuli.event.entity.EntityDeathEvent;
@@ -189,6 +192,7 @@ public class MultiplayerHcGame {
 
             game.listen(GameActivityEvents.TICK, active::tick);
             game.listen(GamePlayerEvents.ADD, active::onPlayerAdd);
+            game.listen(GamePlayerEvents.OFFER, active::onPlayerOffer);
             game.listen(PlayerDeathEvent.EVENT, active::onPlayerDeath);
             game.listen(EntityDeathEvent.EVENT, active::onEntityDeath);
             game.listen(EntitySpawnEvent.EVENT, active::onEntitySpawn);
@@ -201,6 +205,15 @@ public class MultiplayerHcGame {
            //game.listen(EndPortalOpenEvent.EVENT, active::onEndPortalOpen);
 
         });
+    }
+
+    private PlayerOfferResult onPlayerOffer(PlayerOffer playerOffer) {
+        ServerPlayerEntity player = playerOffer.player();
+        BlockPos blockPos = getSurfaceBlock(this.world,0,0);
+        return playerOffer.accept(this.world, new Vec3d(blockPos.getX(), blockPos.getY(), blockPos.getZ()))
+                .and(() -> {
+                    player.changeGameMode(GameMode.SURVIVAL);
+                });
     }
 
     private ActionResult onDamage(LivingEntity livingEntity, DamageSource source, float v) {
@@ -396,6 +409,7 @@ public class MultiplayerHcGame {
         this.world.getChunkManager().addTicket(ChunkTicketType.POST_TELEPORT, chunkPos, 1, player.getId());
         player.teleport(this.world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0.0F, 0.0F);
         player.setSpawnPoint(this.world.getRegistryKey(),player.getBlockPos(),0,true,false);
+
     }
 
 
