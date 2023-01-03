@@ -27,7 +27,7 @@ public class WrathOfMekhaneEvent implements MultiplayerHcEvent{
 
     @Override
     public Text getName() {
-        return Text.of("Wrath of MEKHANE");
+        return Text.of("Thunder and Lightning");
     }
 
     @Override

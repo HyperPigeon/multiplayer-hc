@@ -1,7 +1,6 @@
 package net.hyper_pigeon.multiplayerhc.entity;
 
-import eu.pb4.polymer.api.entity.PolymerEntity;
-import net.hyper_pigeon.multiplayerhc.registry.MultiplayerHcEntities;
+import eu.pb4.polymer.core.api.entity.PolymerEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.mob.CreeperEntity;
@@ -10,11 +9,12 @@ import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.World;
 
 public class AngryIronGolemEntity extends IronGolemEntity implements PolymerEntity {
-    public AngryIronGolemEntity(World world) {
-        super(MultiplayerHcEntities.ANGRY_IRON_GOLEM_ENTITY, world);
+    public AngryIronGolemEntity(EntityType<? extends IronGolemEntity> entityType, World world) {
+        super(entityType, world);
     }
 
     protected void initGoals() {
@@ -32,8 +32,10 @@ public class AngryIronGolemEntity extends IronGolemEntity implements PolymerEnti
         this.targetSelector.add(4, new UniversalAngerGoal<IronGolemEntity>(this, false));
     }
 
+
+
     @Override
-    public EntityType<?> getPolymerEntityType() {
+    public EntityType<?> getPolymerEntityType(ServerPlayerEntity player) {
         return EntityType.IRON_GOLEM;
     }
 }

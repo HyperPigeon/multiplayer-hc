@@ -2,15 +2,15 @@ package net.hyper_pigeon.multiplayerhc.mixin;
 
 import net.hyper_pigeon.multiplayerhc.game.MultiplayerHcGame;
 import net.minecraft.entity.boss.dragon.EnderDragonFight;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.WorldGenerationProgressListener;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.registry.RegistryKey;
-import net.minecraft.world.dimension.DimensionType;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.world.dimension.DimensionOptions;
 import net.minecraft.world.level.ServerWorldProperties;
 import net.minecraft.world.level.storage.LevelStorage;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -21,7 +21,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import xyz.nucleoid.plasmid.game.GameSpace;
 import xyz.nucleoid.plasmid.game.manager.GameSpaceManager;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.concurrent.Executor;
 
@@ -52,12 +51,11 @@ public abstract class ServerWorldMixin {
             at = @At("TAIL"),
             method = "<init>"
     )
-    public void constructorMixin(MinecraftServer server, Executor workerExecutor, LevelStorage.Session session, ServerWorldProperties properties, RegistryKey worldKey, DimensionType dimensionType, WorldGenerationProgressListener worldGenerationProgressListener, ChunkGenerator chunkGenerator, boolean debugWorld, long seed, List spawners, boolean shouldTickTime, CallbackInfo ci) {
+    public void constructorMixin(MinecraftServer server, Executor workerExecutor, LevelStorage.Session session, ServerWorldProperties properties, RegistryKey worldKey, DimensionOptions dimensionOptions, WorldGenerationProgressListener worldGenerationProgressListener, boolean debugWorld, long seed, List spawners, boolean shouldTickTime, CallbackInfo ci) {
         var gameSpace = GameSpaceManager.get().byWorld(toServerWorld());
         if(gameSpace != null){
                 MultiplayerHcGame game = getGame(gameSpace);
                 if(game.end.equals(toServerWorld())){
-                    System.out.println("fight check");
                     this.enderDragonFight = new EnderDragonFight(((ServerWorld) (Object) this), this.getServer().getSaveProperties().getGeneratorOptions().getSeed(), this.getServer().getSaveProperties().getDragonFight());
                 }
         }

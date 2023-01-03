@@ -1,6 +1,8 @@
 package net.hyper_pigeon.multiplayerhc.game.game_events;
 
 import net.hyper_pigeon.multiplayerhc.game.MultiplayerHcGame;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.TntEntity;
 import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -50,9 +52,11 @@ public class OrbitalStrikeEvent implements MultiplayerHcEvent{
 
             game.gameSpace.getPlayers().sendMessage(Text.of("Incoming orbital strike targeting " + randomPlayer.getName().toString() + "!"));
 
-            FireballEntity fireballEntity = new FireballEntity(randomPlayer.getEntityWorld(), randomPlayer, 0, 15,0,10);
-            fireballEntity.updatePosition(blockPos.getX(),blockPos.getY()+50,blockPos.getZ());
-            randomPlayer.getEntityWorld().spawnEntity(fireballEntity);
+            for (int i = 0; i < 20; i++) {
+                TntEntity tntEntity = new TntEntity(EntityType.TNT,randomPlayer.getWorld());
+                tntEntity.updatePosition(blockPos.getX(),blockPos.getY()+50,blockPos.getZ());
+                randomPlayer.getEntityWorld().spawnEntity(tntEntity);
+            }
 
         }
     }

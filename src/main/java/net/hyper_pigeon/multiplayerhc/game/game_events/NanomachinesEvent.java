@@ -10,7 +10,7 @@ import net.minecraft.text.Text;
 public class NanomachinesEvent implements MultiplayerHcEvent{
     @Override
     public Text getName() {
-        return Text.of("Nanomachines son! They harden in response to physical trauma!");
+        return Text.of("Nanomachines son!");
     }
 
     @Override

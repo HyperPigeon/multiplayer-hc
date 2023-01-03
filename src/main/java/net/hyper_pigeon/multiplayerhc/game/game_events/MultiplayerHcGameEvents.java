@@ -40,6 +40,7 @@ public class MultiplayerHcGameEvents {
     public static final DontDoItEvent DONT_DO_IT_EVENT = new DontDoItEvent();
     public static final DirtInYourEyeEvent DIRT_IN_YOUR_EYE_EVENT = new DirtInYourEyeEvent();
     public static final BombermanEvent BOMBERMAN_EVENT = new BombermanEvent();
+    public static final LonelinessEvent LONELINESS_EVENT = new LonelinessEvent();
 
     public static final ArrayList<MultiplayerHcEvent> eventsList = new ArrayList<>(Arrays.asList(
             BLIND_IDIOT_GOD_EVENT,
@@ -75,10 +76,9 @@ public class MultiplayerHcGameEvents {
             HAPPY_BIRTHDAY_EVENT,
             DONT_DO_IT_EVENT,
             DIRT_IN_YOUR_EYE_EVENT,
-            BOMBERMAN_EVENT));
+            LONELINESS_EVENT));
 
 
-    //public static final ArrayList<MultiplayerHcEvent> eventsList = new ArrayList<>(Arrays.asList(POISONED_ARROWS_EVENT));
 
 
 }

@@ -13,7 +13,7 @@ public class DirtInYourEyeEvent implements MultiplayerHcEvent{
 
     @Override
     public Text getName() {
-        return null;
+        return Text.of("Dirt in your eyes");
     }
 
     @Override

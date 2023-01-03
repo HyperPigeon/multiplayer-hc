@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.11-SNAPSHOT'
+    id 'fabric-loom' version '1.0-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -13,13 +13,6 @@ repositories {
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
     // for more information about repositories.
     mavenLocal()
-
-    maven {
-        url "https://www.cursemaven.com"
-        content {
-            includeGroup "curse.maven"
-        }
-    }
 
     maven { url = 'https://maven.nucleoid.xyz/' }
     maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
@@ -50,17 +43,18 @@ dependencies {
     include "xyz.nucleoid:stimuli:${project.stimuli_version}"
 
     //permissions
-    modImplementation 'me.lucko:fabric-permissions-api:0.1-SNAPSHOT'
+    modImplementation 'me.lucko:fabric-permissions-api:0.2-SNAPSHOT'
 
 
     //polymer
-    modImplementation include("eu.pb4:polymer:${project.polymer_version}")
+    modImplementation include("eu.pb4:polymer-core:${project.polymer_version}")
 
     //interdimensional
     modImplementation "net.quiltservertools:interdimensional:${project.interdimensional_version}"
     include "net.quiltservertools:interdimensional:${project.interdimensional_version}"
 
-    include "net.quiltservertools:portals-api:1.1.0"
+    //modImplementation "net.quiltservertools:portals-api:1.2.0"
+    include "net.quiltservertools:portals-api:${project.interdimensional_version}"
 
 }
 

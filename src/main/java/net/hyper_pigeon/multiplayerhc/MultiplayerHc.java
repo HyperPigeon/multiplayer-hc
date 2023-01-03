@@ -1,7 +1,5 @@
 package net.hyper_pigeon.multiplayerhc;
 
-import eu.pb4.polymer.api.entity.PolymerEntity;
-import eu.pb4.polymer.api.entity.PolymerEntityUtils;
 import net.fabricmc.api.ModInitializer;
 import net.hyper_pigeon.multiplayerhc.config.MultiplayerHcGameConfig;
 import net.hyper_pigeon.multiplayerhc.game.MultiplayerHcGameWaiting;

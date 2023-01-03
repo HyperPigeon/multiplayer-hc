@@ -28,8 +28,8 @@ public class HappyBirthdayEvent implements MultiplayerHcEvent{
 
     @Override
     public void startEvent(MultiplayerHcGame game) {
-        ItemStack cakeStack = new ItemStack(Items.CAKE);
         game.gameSpace.getPlayers().stream().forEach(serverPlayerEntity -> {
+            ItemStack cakeStack = new ItemStack(Items.CAKE, 1);
             serverPlayerEntity.giveItemStack(cakeStack);
         });
     }

@@ -3,7 +3,6 @@ package net.hyper_pigeon.multiplayerhc.game;
 import net.hyper_pigeon.multiplayerhc.config.MultiplayerHcGameConfig;
 import net.hyper_pigeon.multiplayerhc.game.game_events.MultiplayerHcEvent;
 import net.hyper_pigeon.multiplayerhc.game.game_events.MultiplayerHcGameEvents;
-import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -12,6 +11,8 @@ import net.minecraft.entity.boss.BossBar;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.boss.dragon.phase.PhaseType;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ChunkTicketType;
 import net.minecraft.server.world.ServerWorld;
@@ -20,19 +21,20 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.Heightmap;
-import net.minecraft.world.biome.source.BiomeSource;
-import net.minecraft.world.biome.source.MultiNoiseBiomeSource;
-import net.minecraft.world.biome.source.TheEndBiomeSource;
 import net.minecraft.world.chunk.WorldChunk;
-import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.dimension.DimensionOptions;
+import net.minecraft.world.dimension.DimensionTypes;
 import net.minecraft.world.gen.GeneratorOptions;
+import net.minecraft.world.gen.WorldPresets;
+import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.ChunkGeneratorSettings;
-import net.minecraft.world.gen.chunk.NoiseChunkGenerator;
+import net.minecraft.world.gen.feature.EndPortalFeature;
+import net.minecraft.world.gen.feature.FeatureConfig;
 import net.quiltservertools.interdimensional.portals.CustomPortalApiRegistry;
 import net.quiltservertools.interdimensional.portals.api.CustomPortalBuilder;
 import net.quiltservertools.interdimensional.portals.portal.PortalIgnitionSource;
@@ -51,6 +53,7 @@ import xyz.nucleoid.stimuli.event.entity.EntitySpawnEvent;
 import xyz.nucleoid.stimuli.event.player.PlayerDeathEvent;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MultiplayerHcGame {
 
@@ -90,76 +93,51 @@ public class MultiplayerHcGame {
     }
 
 
-//    public static GameOpenProcedure open(GameOpenContext<MultiplayerHcGameConfig> context) {
-//        MultiplayerHcGameConfig config = context.config();
-//
-//        RuntimeWorldConfig worldConfig = new RuntimeWorldConfig()
-//                .setDimensionType(DimensionType.OVERWORLD_REGISTRY_KEY)
-//                .setDifficulty(Difficulty.HARD)
-//                .setGenerator(context.server().getOverworld().getChunkManager().getChunkGenerator());
-//
-//        return context.openWithWorld(worldConfig, (activity, world) -> {
-//            MultiplayerHcGame game = new MultiplayerHcGame(config, activity.getGameSpace(), world);
-//
-//
-//            activity.allow(GameRuleType.PVP);
-//            activity.listen(GamePlayerEvents.ADD, game::onPlayerAdd);
-//            activity.listen(PlayerDeathEvent.EVENT, game::onPlayerDeath);
-//            activity.listen(EntityDeathEvent.EVENT, game::onEntityDeath);
-//            activity.listen(GameActivityEvents.ENABLE, game::onEnable);
-//        });
-//
-//    }
+    public static void open(GameSpace gameSpace, MultiplayerHcGameConfig config){
 
-    public static void open(GameSpace gameSpace, MultiplayerHcGameConfig  config){
 
         Long seed = gameSpace.getServer().getOverworld().getRandom().nextLong();
 
 
-        NoiseChunkGenerator NetherNoiseChunkGenerator =
-                new NoiseChunkGenerator(gameSpace.getServer().getRegistryManager().get(Registry.NOISE_WORLDGEN),
-                        (BiomeSource)MultiNoiseBiomeSource.Preset.NETHER.getBiomeSource(gameSpace.getServer().getRegistryManager().get(Registry.BIOME_KEY),
-                                true),
-                        seed,
-                        () -> gameSpace.getServer().getRegistryManager().get(Registry.CHUNK_GENERATOR_SETTINGS_KEY).getOrThrow(ChunkGeneratorSettings.NETHER));
-
-        NoiseChunkGenerator EndNoiseChunkGenerator =
-                new NoiseChunkGenerator(gameSpace.getServer().getRegistryManager().get(Registry.NOISE_WORLDGEN),
-                        (BiomeSource)new TheEndBiomeSource(gameSpace.getServer().getRegistryManager().get(Registry.BIOME_KEY), seed),seed,
-        () -> gameSpace.getServer().getRegistryManager().get(Registry.CHUNK_GENERATOR_SETTINGS_KEY).getOrThrow(ChunkGeneratorSettings.END));
-
-
+        ChunkGenerator overworldGen = config.overworld().chunkGenerator();
+        ChunkGenerator netherGen = config.nether().chunkGenerator();
+        ChunkGenerator endGen = config.end().chunkGenerator();
 
         RuntimeWorldConfig worldConfig = new RuntimeWorldConfig()
-                .setDimensionType(DimensionType.OVERWORLD_REGISTRY_KEY)
+                .setDimensionType(config.overworld().dimensionTypeEntry())
                 .setDifficulty(Difficulty.HARD)
                 .setGameRule(GameRules.DO_MOB_SPAWNING,true)
-                .setGenerator(GeneratorOptions.createOverworldGenerator(gameSpace.getServer().getRegistryManager(),
-                        seed));
+                .setGameRule(GameRules.DO_DAYLIGHT_CYCLE, true)
+                .setGenerator(overworldGen)
+                .setSeed(seed);
 
         RuntimeWorldConfig netherConfig = new RuntimeWorldConfig()
-                .setDimensionType(DimensionType.THE_NETHER_REGISTRY_KEY)
+                .setDimensionType(config.nether().dimensionTypeEntry())
                 .setDifficulty(Difficulty.HARD)
                 .setGameRule(GameRules.DO_MOB_SPAWNING,true)
-                .setGenerator(NetherNoiseChunkGenerator);
+                .setGenerator(netherGen)
+                .setSeed(seed);
 
         RuntimeWorldConfig endConfig = new RuntimeWorldConfig()
-                .setDimensionType(DimensionType.THE_END_REGISTRY_KEY)
+                .setDimensionType(config.end().dimensionTypeEntry())
                 .setDifficulty(Difficulty.HARD)
                 .setGameRule(GameRules.DO_MOB_SPAWNING,true)
-                .setGenerator(EndNoiseChunkGenerator);
-
-
-
+                .setGenerator(endGen)
+                .setSeed(seed);
 
 
         ServerWorld world = gameSpace.getWorlds().add(worldConfig);
         ServerWorld nether = gameSpace.getWorlds().add(netherConfig);
         ServerWorld end = gameSpace.getWorlds().add(endConfig);
 
-        end.getServer().getSaveProperties().setDragonFight(end.getEnderDragonFight().toNbt());
-        end.getChunkManager().getPersistentStateManager().save();
-
+//        NbtCompound nbtCompound = new NbtCompound();
+//        nbtCompound.putBoolean("DragonKilled", false);
+//        nbtCompound.putBoolean("PreviouslyKilled", false);
+        //EnderDragonFight enderDragonFight = new EnderDragonFight(end, seed, nbtCompound);
+        //end.getServer().getSaveProperties().setDragonFight(enderDragonFight.toNbt());
+        createDragon(end);
+        generateEndPortal(false,end);
+        //end.getChunkManager().getPersistentStateManager().save();
 
         CustomPortalBuilder netherPortal = CustomPortalBuilder.beginPortal();
         netherPortal.frameBlock(Blocks.OBSIDIAN);
@@ -171,25 +149,11 @@ public class MultiplayerHcGame {
 
 
 
-//        CustomPortalBuilder endPortal = CustomPortalBuilder.beginPortal();
-//        endPortal.frameBlock(Blocks.DIAMOND_BLOCK);
-//        endPortal.ignitionSource(PortalIgnitionSource.FIRE);
-//        endPortal.destDimID(end.getRegistryKey().getValue());
-//        endPortal.returnDim(world.getRegistryKey().getValue(), false);
-//        endPortal.registerPortal();
-
-
-
-
-
         gameSpace.setActivity(game -> {
             MultiplayerHcGame active = new MultiplayerHcGame(config, gameSpace, world, nether, end);
             runningGames.add(active);
 
             game.setRule(GameRuleType.PVP,ActionResult.SUCCESS);
-
-            //game.setRule(GameRuleType.PORTALS, ActionResult.SUCCESS);
-
             game.listen(GameActivityEvents.TICK, active::tick);
             game.listen(GamePlayerEvents.ADD, active::onPlayerAdd);
             game.listen(GamePlayerEvents.OFFER, active::onPlayerOffer);
@@ -201,15 +165,14 @@ public class MultiplayerHcGame {
             game.listen(EntityDamageEvent.EVENT, active::onDamage);
 
 
-//            game.listen(NetherPortalOpenEvent.EVENT, active::onNetherPortalOpen);
-           //game.listen(EndPortalOpenEvent.EVENT, active::onEndPortalOpen);
-
         });
+
     }
+
 
     private PlayerOfferResult onPlayerOffer(PlayerOffer playerOffer) {
         ServerPlayerEntity player = playerOffer.player();
-        BlockPos blockPos = getSurfaceBlock(this.world,0,0);
+        BlockPos blockPos = this.world.getSpawnPos();
         return playerOffer.accept(this.world, new Vec3d(blockPos.getX(), blockPos.getY(), blockPos.getZ()))
                 .and(() -> {
                     player.changeGameMode(GameMode.SURVIVAL);
@@ -217,19 +180,21 @@ public class MultiplayerHcGame {
     }
 
     private ActionResult onDamage(LivingEntity livingEntity, DamageSource source, float v) {
-        multiplayerHcEventManager.onDamage(this,livingEntity,source,v);
+        if(config.mode().equals("random_events")) {
+            multiplayerHcEventManager.onDamage(this,livingEntity,source,v);
+        }
         return ActionResult.PASS;
     }
 
     private ActionResult onEntitySpawn(Entity entity) {
-        multiplayerHcEventManager.onEntitySpawn(this,entity);
+        if(config.mode().equals("random_events")) {
+            multiplayerHcEventManager.onEntitySpawn(this,entity);
+        }
         return ActionResult.PASS;
     }
 
     private void tick() {
-
-
-        if(nextEventAddTime <= world.getTime() && eventProbablity >= MultiplayerHcEvent.random.nextFloat()) {
+        if(config.mode().equals("random_events") && nextEventAddTime <= world.getTime() && eventProbablity >= MultiplayerHcEvent.random.nextFloat()) {
 
             MultiplayerHcEvent multiplayerHcEvent = MultiplayerHcGameEvents.eventsList.
                     get(MultiplayerHcEvent.random.nextInt
@@ -239,8 +204,9 @@ public class MultiplayerHcGame {
 
             nextEventAddTime = world.getTime() + EVENT_COOLDOWN;
         }
-
-        multiplayerHcEventManager.tickMultiplayerHcEventManager(this);
+        if(config.mode().equals("random_events")){
+            multiplayerHcEventManager.tickMultiplayerHcEventManager(this);
+        }
 
         switch(this.gamePhase){
             case CONTINUE_GAME -> {
@@ -253,16 +219,9 @@ public class MultiplayerHcGame {
                 else {
                     timerBar.setTitle(getText(this.finishTime - this.world.getTime()));
                     timerBar.setProgress((float) (this.finishTime - this.world.getTime()) / 600);
-
-                    if(hasWon) {
-                        victoryMessage(this.finishTime - this.world.getTime());
-                    }
                 }
             }
             case GAME_CLOSED -> {
-//                this.gameSpace.getPlayers().stream().forEach(gamePlayer -> {
-//                    this.timerBar.removePlayer(gamePlayer);
-//                });
                 this.gameSpace.close(GameCloseReason.FINISHED);
             }
         }
@@ -278,46 +237,30 @@ public class MultiplayerHcGame {
         return Text.of("Returning to Hub in " + seconds + " seconds");
     }
 
-    public void victoryMessage(long ticksUntilEnd){
-        if(ticksUntilEnd == 590){
-            this.gameSpace.getPlayers().
-                    sendMessage(Text.of("Congratulations! You beat Multiplayer HC!"));
-        }
-        else if(ticksUntilEnd == 540) {
-            this.gameSpace.getPlayers().
-                    sendMessage(Text.of("I hope your friendships have remained intact throughout your attempts!"));
-        }
-        else if(ticksUntilEnd == 480) {
-            this.gameSpace.getPlayers().
-                    sendMessage(Text.of("Unless this only took a single attempt, which would be very impressive!"));
-        }
-        else if(ticksUntilEnd == 420) {
-            this.gameSpace.getPlayers().
-                    sendMessage(Text.of("This game was made by CyborgPigeon, and is a port of a paper plugin made by Hoi_A. " +
-                            "I hope you enjoyed playing!"));
-        }
+
+
+
+    private static EnderDragonEntity createDragon(ServerWorld end) {
+        end.getWorldChunk(new BlockPos(0, 128, 0));
+        EnderDragonEntity enderDragonEntity = EntityType.ENDER_DRAGON.create(end);
+        enderDragonEntity.getPhaseManager().setPhase(PhaseType.HOLDING_PATTERN);
+        enderDragonEntity.refreshPositionAndAngles(0.0, 128.0, 0.0, end.random.nextFloat() * 360.0f, 0.0f);
+        end.spawnEntity(enderDragonEntity);
+        return enderDragonEntity;
     }
 
+    private static void generateEndPortal(boolean previouslyKilled, ServerWorld end) {
+        EndPortalFeature endPortalFeature = new EndPortalFeature(previouslyKilled);
 
-//    private ActionResult onEndPortalOpen(ItemUsageContext itemUsageContext, BlockPattern.Result result) {
-//        EndPortalFeature endPortalFeature = new EndPortalFeature(false);
-//        BlockPos exitPortalLocation = this.end.getTopPosition(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, EndPortalFeature.ORIGIN).down();
-//        while (this.end.getBlockState(exitPortalLocation).isOf(Blocks.BEDROCK) && exitPortalLocation.getY() > this.end.getSeaLevel()) {
-//            exitPortalLocation = exitPortalLocation.down();
-//        }
-//        endPortalFeature.configure(FeatureConfig.DEFAULT).generate(this.end, this.end.getChunkManager().getChunkGenerator(), new Random(), exitPortalLocation);
-//
-//
-//        return ActionResult.SUCCESS;
-//    }
+        BlockPos exitPortalLocation = end.getTopPosition(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, EndPortalFeature.ORIGIN).down();
 
-    private EnderDragonEntity createDragon() {
-        this.end.getWorldChunk(new BlockPos(0, 128, 0));
-        EnderDragonEntity enderDragonEntity = EntityType.ENDER_DRAGON.create(this.world);
-        enderDragonEntity.getPhaseManager().setPhase(PhaseType.HOLDING_PATTERN);
-        enderDragonEntity.refreshPositionAndAngles(0.0, 128.0, 0.0, this.world.random.nextFloat() * 360.0f, 0.0f);
-        this.end.spawnEntity(enderDragonEntity);
-        return enderDragonEntity;
+        while(end.getBlockState(exitPortalLocation).isOf(Blocks.BEDROCK) && exitPortalLocation.getY() > end.getSeaLevel()) {
+            exitPortalLocation = exitPortalLocation.down();
+        }
+
+        endPortalFeature.generateIfValid(
+                FeatureConfig.DEFAULT, end, end.getChunkManager().getChunkGenerator(), Random.create(), exitPortalLocation
+        );
     }
 
     private void onDisable() {
@@ -336,7 +279,8 @@ public class MultiplayerHcGame {
 
     private ActionResult onEntityDeath(LivingEntity livingEntity, DamageSource source) {
         if(livingEntity instanceof EnderDragonEntity){
-            //this.gameSpace.close(GameCloseReason.FINISHED);
+            this.gameSpace.getPlayers().
+                    sendMessage(Text.of("Congratulations! You beat Multiplayer HC!"));
 
             hasWon = true;
 
@@ -352,8 +296,10 @@ public class MultiplayerHcGame {
             return ActionResult.SUCCESS;
         }
 
+        if(config.mode().equals("random_events")) {
+            multiplayerHcEventManager.onEntityDeath(this,livingEntity,source);
 
-        multiplayerHcEventManager.onEntityDeath(this,livingEntity,source);
+        }
 
         return ActionResult.PASS;
     }
@@ -372,7 +318,7 @@ public class MultiplayerHcGame {
             });
 
             this.gameSpace.getPlayers().
-                    sendMessage(Text.of(serverPlayerEntity.getName().asString() + " died and ruined it for everyone!"));
+                    sendMessage(Text.of(serverPlayerEntity.getGameProfile().getName() + " died and ruined it for everyone!"));
 
 
             //this.gameSpace.close(GameCloseReason.FINISHED);

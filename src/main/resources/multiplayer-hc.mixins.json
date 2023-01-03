@@ -4,6 +4,7 @@
   "package": "net.hyper_pigeon.multiplayerhc.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "EnderDragonEntityMixin",
     "EnderDragonFightMixin",
     "EndPortalBlockMixin"
   ],

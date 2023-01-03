@@ -5,10 +5,9 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.GameRules;
@@ -89,8 +88,8 @@ public class MultiplayerHcGameWaiting {
     }
 
     private void onPlayerAdd(ServerPlayerEntity serverPlayerEntity) {
-        LiteralText message = new LiteralText(this.config.greeting());
-        this.gameSpace.getPlayers().sendMessage(message);
+        //LiteralTextContent message = new LiteralTextContent(this.config.greeting());
+        this.gameSpace.getPlayers().sendMessage(Text.of(this.config.title()));
     }
 
     private PlayerOfferResult onPlayerOffer(PlayerOffer playerOffer) {

@@ -5,6 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.MathHelper;
 import xyz.nucleoid.plasmid.game.GameSpace;
 
 import java.util.Random;

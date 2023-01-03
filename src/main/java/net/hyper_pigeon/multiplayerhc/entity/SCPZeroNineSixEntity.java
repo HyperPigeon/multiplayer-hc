@@ -1,11 +1,12 @@
 package net.hyper_pigeon.multiplayerhc.entity;
 
-import eu.pb4.polymer.api.entity.PolymerEntity;
+import eu.pb4.polymer.core.api.entity.PolymerEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
 
@@ -28,8 +29,9 @@ public class SCPZeroNineSixEntity extends EndermanEntity implements PolymerEntit
         super.tick();
     }
 
+
     @Override
-    public EntityType<?> getPolymerEntityType() {
+    public EntityType<?> getPolymerEntityType(ServerPlayerEntity player) {
         return EntityType.ENDERMAN;
     }
 }

@@ -1,12 +1,15 @@
 package net.hyper_pigeon.multiplayerhc.mixin;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.tag.BlockTags;
-import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.util.math.intprovider.ConstantIntProvider;
+import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.dimension.DimensionTypes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,9 +23,58 @@ import java.util.OptionalLong;
 @Mixin(Entity.class)
 public class EntityMixin {
 
-    public DimensionType THE_NETHER = DimensionType.create(OptionalLong.of(18000L), false, true, true, false, 8.0, false, true, false, true, false, 0, 256, 128, BlockTags.INFINIBURN_NETHER.getId(), DimensionType.THE_NETHER_ID, 0.1f);
-    public DimensionType THE_OVERWORLD = DimensionType.create(OptionalLong.empty(), true, false, false, true, 1.0, false, false, true, false, true, -64, 384, 384, BlockTags.INFINIBURN_OVERWORLD.getId(), DimensionType.OVERWORLD_ID, 0.0f);
-    public DimensionType THE_END = DimensionType.create(OptionalLong.of(6000L), false, false, false, false, 1.0, true, false, false, false, true, 0, 256, 256, BlockTags.INFINIBURN_END.getId(), DimensionType.THE_END_ID, 0.0f);
+    public DimensionType THE_NETHER = new DimensionType(
+            OptionalLong.of(18000L),
+            false,
+            true,
+            true,
+            false,
+            8.0,
+            false,
+            true,
+            0,
+            256,
+            128,
+            BlockTags.INFINIBURN_NETHER,
+            DimensionTypes.THE_NETHER_ID,
+            0.1F,
+            new DimensionType.MonsterSettings(true, false, ConstantIntProvider.create(7), 15)
+    );
+    public DimensionType THE_OVERWORLD = new DimensionType(
+            OptionalLong.empty(),
+            true,
+            false,
+            false,
+            true,
+            1.0,
+            true,
+            false,
+            -64,
+            384,
+            384,
+            BlockTags.INFINIBURN_OVERWORLD,
+            DimensionTypes.OVERWORLD_ID,
+            0.0F,
+            new DimensionType.MonsterSettings(false, true, UniformIntProvider.create(0, 7), 0)
+    );
+    public DimensionType THE_END =
+            new DimensionType(
+                    OptionalLong.of(6000L),
+                    false,
+                    false,
+                    false,
+                    false,
+                    1.0,
+                    false,
+                    false,
+                    0,
+                    256,
+                    256,
+                    BlockTags.INFINIBURN_END,
+                    DimensionTypes.THE_END_ID,
+                    0.0F,
+                    new DimensionType.MonsterSettings(false, true, UniformIntProvider.create(0, 7), 0)
+            );
 
     @Shadow
     public World world;
@@ -40,16 +92,16 @@ public class EntityMixin {
     protected int netherPortalTime;
 
     @Shadow
-    public native void resetNetherPortalCooldown();
+    public native void resetPortalCooldown();
 
     @Shadow
     public native Entity moveToWorld(ServerWorld destination);
 
     @Shadow
-    protected native void tickNetherPortalCooldown();
+    protected native void tickPortalCooldown();
 
 
-    @Inject(method = "tickNetherPortal",at = @At("HEAD"))
+    @Inject(method = "tickPortal",at = @At("HEAD"))
     public void tickNetherPortal(CallbackInfo ci){
         var gameSpace = GameSpaceManager.get().byWorld(world);
 
@@ -79,13 +131,13 @@ public class EntityMixin {
                 if (serverWorld2 != null) {
                     this.world.getProfiler().push("portal");
                     this.netherPortalTime = i;
-                    this.resetNetherPortalCooldown();
+                    this.resetPortalCooldown();
                     this.moveToWorld(serverWorld2);
                     this.world.getProfiler().pop();
                 }
                 this.inNetherPortal = false;
             }
-            this.tickNetherPortalCooldown();
+            this.tickPortalCooldown();
         }
 
     }

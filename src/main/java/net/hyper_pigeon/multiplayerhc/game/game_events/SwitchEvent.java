@@ -54,19 +54,9 @@ public class SwitchEvent implements MultiplayerHcEvent{
                 BlockPos blockPos2 = player2.getBlockPos();
 
 
-                if(player1.hasVehicle()){
-                    player1.requestTeleportAndDismount(blockPos2.getX(), blockPos2.getY(), blockPos2.getZ());
-                }
-                else {
-                    player1.requestTeleport(blockPos2.getX(), blockPos2.getY(), blockPos2.getZ());
-                }
+                player1.teleport(blockPos2.getX(), blockPos2.getY(), blockPos2.getZ());
+                player2.teleport(blockPos1.getX(),blockPos1.getY(),blockPos1.getZ());
 
-                if(player2.hasVehicle()){
-                    player2.requestTeleportAndDismount(blockPos1.getX(),blockPos1.getY(),blockPos1.getZ());
-                }
-                else {
-                    player2.requestTeleport(blockPos1.getX(),blockPos1.getY(),blockPos1.getZ());
-                }
 
             }
 

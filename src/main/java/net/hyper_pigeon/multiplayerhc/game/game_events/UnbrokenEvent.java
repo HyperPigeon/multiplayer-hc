@@ -8,7 +8,7 @@ import net.minecraft.text.Text;
 public class UnbrokenEvent implements MultiplayerHcEvent {
     @Override
     public Text getName() {
-        return Text.of("Unbroken");
+        return Text.of("Auto Repair");
     }
 
     @Override

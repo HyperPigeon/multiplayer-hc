@@ -23,7 +23,6 @@ import xyz.nucleoid.plasmid.game.manager.GameSpaceManager;
 public class EndPortalBlockMixin{
 
 
-
     public MultiplayerHcGame getGame(GameSpace gameSpace){
         for(MultiplayerHcGame game : MultiplayerHcGame.runningGames){
             if(game.gameSpace.equals(gameSpace)){

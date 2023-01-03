@@ -26,7 +26,7 @@ public class MultiplayerHcEventManager {
             if(event.getRight() < game.world.getTime()){
                 removeTheseEvents.add(event);
                 if(event.getLeft().getDuration() > 0) {
-                    game.gameSpace.getPlayers().sendMessage(Text.of(event.getLeft().getName().asString() + " has ended!"));
+                    game.gameSpace.getPlayers().sendMessage(Text.of(event.getLeft().getName().getString() + " has ended!"));
                 }
             }
             else {
@@ -58,7 +58,7 @@ public class MultiplayerHcEventManager {
     public void addEvent(MultiplayerHcGame game, MultiplayerHcEvent event, ServerWorld world){
         long time = world.getTime()+event.getDuration();
         if(!containsEvent(event)){
-            game.gameSpace.getPlayers().sendMessage(Text.of("EVENT: " + event.getName().asString()));
+            game.gameSpace.getPlayers().sendMessage(Text.of("EVENT: " + event.getName().getString()));
             events.add(new Pair<MultiplayerHcEvent,Long>(event,time));
             event.startEvent(game);
         }
